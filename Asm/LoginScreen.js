@@ -1,58 +1,62 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import Block from '../component/Block';
+import Banner from '../component/Banner';
+import CustomTextInput from '../component/CustomTextInput';
+import Button from '../component/Button';
+import CustomPasswordInput from '../component/CustomPasswordInput';
 
-const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const LoginScreen = ({navigation}) => {
+  const [tendangnhap, settendangnhap] = useState('');
+  const [password, setpassword] = useState('');
 
   const handleLogin = () => {
-    // Xử lý đăng nhập ở đây
-    console.log('Đăng nhập:', username, password);
+    if (isEmpty(tendangnhap) || isEmpty(password) ) {
+      console.log('Vui lòng điền đầy đủ thông tin');
+      return;
+    }
+    console.log('Đăng nhập:', tendangnhap, password);
+    navigation.navigate('Main');
+  };
+  const handleRest = () =>{
+    navigation.navigate('RegisterScreen');
+  }
+  const isEmpty = (value) => {
+    // Kiểm tra xem giá trị có rỗng hay không
+    return value.trim() === '';
   };
 
   return (
     <View style={styles.container}>
-       <Text style={styles.title}>Đăng Nhap</Text>
-      <Image source={require('../img/logofpoly.jpg')} style={styles.logo} />
+      <ScrollView>
+        <Text style={styles.title}>Đăng Nhập</Text>
+        <Banner />
+        <Block>
+          <CustomTextInput
+            placeholder="Tên Đăng Nhập"
+            value={tendangnhap}
+            onChangeText={settendangnhap}
+            
+          />
+          <CustomPasswordInput
+            placeholder="Mật khẩu"
+            value={password}
+            onChangeText={setpassword}
+          />
+          <Button title="Đăng Nhập" onPress={handleLogin} />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Tên đăng nhập"
-        placeholderTextColor="#aaa"
-        onChangeText={(text) => setUsername(text)}
-        value={username}
-      />
+          <View>
+            <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
+              <Text style={{ color: '#828282', fontWeight: 700 }}>Don't have account? Click </Text>
+            </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Mật khẩu"
-        placeholderTextColor="#aaa"
-        secureTextEntry
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-      />
-
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Đăng nhập</Text>
-      </TouchableOpacity>
-
-    
-      <View>
-        <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: 'center', }}>
-          <Text style={{ color: '#828282', fontWeight: 700 }}>Don't have account? Click </Text>
-          <TouchableOpacity onPress={() =>{
-            navigation.navigate('Singup');
-          }}>
-            <Text style={{ color: '#D17842', fontWeight: 700 }}>Register</Text>
-
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 60, justifyContent: 'center', }}>
-          <Text style={{ color: '#828282', fontWeight: 700 }}>Forget Password? Click  </Text>
-          <Text style={{ color: '#D17842', fontWeight: 700 }}>Reset</Text>
-        </View>
-      </View>
+            <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 60, justifyContent: 'center', }}>
+              <Text style={{ color: '#828282', fontWeight: 700 }}>Forget Password? Click  </Text>
+              <Text style={{ color: '#D17842', fontWeight: 700 }} onPress={handleRest}>Reset</Text>
+            </View>
+          </View>
+        </Block>
+      </ScrollView>
     </View>
   );
 };
@@ -60,48 +64,15 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#F5F5F5',
   },
   title: {
-    fontSize: 24,
+    fontSize: 35,
     fontWeight: 'bold',
+    marginTop: 60,
     marginBottom: 20,
-  },
-  logo: {
-    width: 350,
-    height: 200,
-    marginBottom: 50,
-  },
-  input: {
-    width: '80%',
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 20,
-    padding: 10,
-    color: '#333',
-  },
-  loginButton: {
-    backgroundColor: '#4287f5',
-    borderRadius: 5,
-    padding: 10,
-    width: '80%',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  registerText: {
-    marginTop: 20,
-    color: '#4287f5',
-    fontSize: 16,
-    textDecorationLine: 'underline',
+    textAlign: 'center',
+    color: '#FF0000'
   },
 });
 

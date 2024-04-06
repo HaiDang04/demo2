@@ -1,74 +1,111 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import Block from '../component/Block';
+import Banner from '../component/Banner';
+import CustomTextInput from '../component/CustomTextInput';
+import Button from '../component/Button';
+import CustomPasswordInput from '../component/CustomPasswordInput';
 
-const SignupScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
+const RegisterScreen = ({navigation}) => {
+  const [tendangnhap, settendangnhap] = useState('');
   const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [sodienthoai, setSoDienThoai] = useState('');
+  const [password, setpassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignup = () => {
-    // Xử lý đăng ký ở đây
-    console.log('Đăng ký:', username, email, phoneNumber, password);
+  const handleRegister = () => {
+    if (isEmpty(tendangnhap) || isEmpty(email) || isEmpty(sodienthoai) || isEmpty(password) || isEmpty(confirmPassword)) {
+      console.log('Vui lòng điền đầy đủ thông tin');
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      console.log('Email không hợp lệ');
+      return;
+    }
+
+    if (!isValidPhoneNumber(sodienthoai)) {
+      console.log('Số điện thoại không hợp lệ');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      console.log('Xác nhận mật khẩu không khớp');
+      return;
+    }
+
+    console.log('Đăng ký:', tendangnhap, email, sodienthoai, password);
+    navigation.navigate('LoginScreen');
   };
+
+  const isEmpty = (value) => {
+    // Kiểm tra xem giá trị có rỗng hay không
+    return value.trim() === '';
+  };
+
+  const isValidEmail = (email) => {
+    // Kiểm tra định dạng email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isValidPhoneNumber = (phoneNumber) => {
+    // Kiểm tra định dạng số điện thoại
+    const phoneNumberRegex = /^\d{10}$/;
+    return phoneNumberRegex.test(phoneNumber);
+  };
+
+  const handleLogin = () =>{
+    navigation.navigate('LoginScreen');
+  }
 
   return (
     <View style={styles.container}>
-       <Text style={styles.title}>Đăng ký</Text>
-      <Image source={require('../img/logofpoly.jpg')} style={styles.logo} />
+      <ScrollView>
+        <Text style={styles.title}>Đăng Ký</Text>
+        <Banner />
+        <Block>
+          <CustomTextInput
+            placeholder="Tên Đăng Nhập"
+            value={tendangnhap}
+            onChangeText={settendangnhap}
+          />
+          <CustomTextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <CustomTextInput
+            placeholder="Số Điện Thoại"
+            value={sodienthoai}
+            onChangeText={setSoDienThoai}
+            keyboardType="numeric"
+          />
+          <CustomPasswordInput
+            placeholder="Mật khẩu"
+            value={password}
+            onChangeText={setpassword}
+          />
+          <CustomPasswordInput
+            placeholder="Xác nhận mật khẩu"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+          />
+          <Button title="Đăng Ký" onPress={handleRegister} />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Tên đăng nhập"
-        placeholderTextColor="#aaa"
-        onChangeText={(text) => setUsername(text)}
-        value={username}
-      />
+          <View>
+            <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: 'center' }}>
+              <Text style={{ color: '#828282', fontWeight: '700' }}>Already have an account? Click </Text>
+              <Text style={{ color: '#D17842', fontWeight: '700' }} onPress={handleLogin}>Đăng Nhập</Text>
+            </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor="#aaa"
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        keyboardType="email-address"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Số điện thoại"
-        placeholderTextColor="#aaa"
-        onChangeText={(text) => setPhoneNumber(text)}
-        value={phoneNumber}
-        keyboardType="phone-pad"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Mật khẩu"
-        placeholderTextColor="#aaa"
-        secureTextEntry
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Xác nhận mật khẩu"
-        placeholderTextColor="#aaa"
-        secureTextEntry
-        onChangeText={(text) => setConfirmPassword(text)}
-        value={confirmPassword}
-      />
-
-      <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Đăng ký</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.loginText}>Đăng nhập</Text>
-      </TouchableOpacity>
+            <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 60, justifyContent: 'center' }}>
+              <Text style={{ color: '#828282', fontWeight: '700' }}>Forget Password? Click  </Text>
+              <Text style={{ color: '#D17842', fontWeight: '700' }}>Reset</Text>
+            </View>
+          </View>
+        </Block>
+      </ScrollView>
     </View>
   );
 };
@@ -76,49 +113,16 @@ const SignupScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#F5F5F5',
   },
   title: {
-    fontSize: 24,
+    fontSize: 35,
     fontWeight: 'bold',
+    marginTop: 60,
     marginBottom: 20,
-  },
-  logo: {
-    width: 350,
-    height: 200,
-    marginBottom: 50,
-  },
-  input: {
-    width: '80%',
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10, // Thay đổi giá trị này để tạo khoảng cách nhỏ hơn
-    padding: 10,
-    color: '#333',
-  },
-  signupButton: {
-    backgroundColor: '#4287f5',
-    borderRadius: 5,
-    padding: 10,
-    width: '80%',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  loginText: {
-    marginTop: 20,
-    color: '#4287f5',
-    fontSize: 16,
-    textDecorationLine: 'underline',
+    textAlign: 'center',
+    color: '#FF0000',
   },
 });
 
-export default SignupScreen;
+export default RegisterScreen;
