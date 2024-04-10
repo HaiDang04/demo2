@@ -1,0 +1,58 @@
+{
+  "nguoidung": [
+    {
+      "tendangnhap": "admin",
+      "email": "d@gmail.com",
+      "sodienthoai": "0123456",
+      "password": "123456",
+      "id": "dc30"
+    },
+    {
+      "id": "6634",
+      "tendangnhap": "d",
+      "email": "d@gmail.com",
+      "sodienthoai": "0999999999",
+      "password": "d123"
+    }
+  ],
+  "sanpham": [
+    {
+      "id": "1",
+      "name": "Iphone 15",
+      "price": 34000,
+      "brand": "nhà tá000",
+      "detail": " Điện thoại Samsung Galaxy S21 là một sản phẩm công nghệ hàng đầu với nhiều tính năng vượt trội. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "status": 0,
+      "image": "https://loremflickr.com/cache/resized/65535_52731489498_17b4fb3cbc_c_640_480_nofilter.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Iphone 16",
+      "price": 990000,
+      "brand": "nhà tá0",
+      "detail": " Điện thoại Samsung Galaxy S21 là một sản phẩm công nghệ hàng đầu với nhiều tính năng vượt trội. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "status": 0,
+      "image": "https://loremflickr.com/cache/resized/65535_52731489498_17b4fb3cbc_c_640_480_nofilter.jpg"
+    }
+  ],
+  "sanphamnew": [
+    {
+      "id": "1",
+      "name": "Iphone 15",
+      "price": "$34000",
+      "brand": "nhà tá",
+      "detail": " Điện thoại Samsung Galaxy S21 là một sản phẩm công nghệ hàng đầu với nhiều tính năng vượt trội. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "status": 0,
+      "image": "https://loremflickr.com/cache/resized/65535_52731489498_17b4fb3cbc_c_640_480_nofilter.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Iphone 15",
+      "price": "$34000",
+      "brand": "nhà tá",
+      "detail": " Điện thoại Samsung Galaxy S21 là một sản phẩm công nghệ hàng đầu với nhiều tính năng vượt trội. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "status": 0,
+      "image": "https://loremflickr.com/cache/resized/65535_52731489498_17b4fb3cbc_c_640_480_nofilter.jpg"
+    }
+  ]
+}

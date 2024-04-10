@@ -17,12 +17,25 @@ import PhoneInfoScreen from './Asm/PhoneInfoScreen';
 import ChangePasswordScreen from './Asm/ChangePasswordScreen ';
 import Welcome from './Asm/Welcome';
 import { MyThemes } from './component/MyThemes';
+import Bai1 from './demoLogin/Bai1';
+import Bai2 from './demoLogin/Bai2';
+import MainScreen from './Asm/MainScreen';
 const Stack = createNativeStackNavigator();
 function myStack() {
     return (
         <MyThemes>
         <NavigationContainer>
             <Stack.Navigator>
+            {/* <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Bai1"
+                    component={MainScreen}>
+                </Stack.Screen> */}
+                 <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Main"
+                    component={Main}>
+                </Stack.Screen>
             <Stack.Screen
                     options={{ headerShown: false }}
                     name="Welcome"
@@ -43,13 +56,13 @@ function myStack() {
 
                 <Stack.Screen
                     options={{ headerShown: false }}
-                    name="Main"
-                    component={Main}>
+                    name="MainScreen"
+                    component={MainScreen}>
                 </Stack.Screen>
 
                 <Stack.Screen
                     options={{ headerShown: false }}
-                    name="ChiTietSP"
+                    name="ChiTietSanPham"
                     component={ChiTietSP}>
                 </Stack.Screen>
 

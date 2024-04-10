@@ -5,8 +5,9 @@ import Banner from '../component/Banner';
 import CustomTextInput from '../component/CustomTextInput';
 import Button from '../component/Button';
 import CustomPasswordInput from '../component/CustomPasswordInput';
+import COMMON from '../COMMON';
 
-const RegisterScreen = ({navigation}) => {
+const RegisterScreen = ({ navigation }) => {
   const [tendangnhap, settendangnhap] = useState('');
   const [email, setEmail] = useState('');
   const [sodienthoai, setSoDienThoai] = useState('');
@@ -34,8 +35,29 @@ const RegisterScreen = ({navigation}) => {
       return;
     }
 
-    console.log('Đăng ký:', tendangnhap, email, sodienthoai, password);
-    navigation.navigate('LoginScreen');
+    // Gửi dữ liệu đăng ký lên server
+    const data = {
+      tendangnhap,
+      email,
+      sodienthoai,
+      password,
+    };
+
+    fetch(`http://${COMMON.ipv4}:3000/nguoidung`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        console.log('Đăng ký thành công:', responseData);
+        navigation.navigate('LoginScreen');
+      })
+      .catch(error => {
+        console.log('Lỗi khi đăng ký:', error);
+      });
   };
 
   const isEmpty = (value) => {
@@ -55,9 +77,9 @@ const RegisterScreen = ({navigation}) => {
     return phoneNumberRegex.test(phoneNumber);
   };
 
-  const handleLogin = () =>{
+  const handleLogin = () => {
     navigation.navigate('LoginScreen');
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -100,8 +122,7 @@ const RegisterScreen = ({navigation}) => {
             </View>
 
             <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 60, justifyContent: 'center' }}>
-              <Text style={{ color: '#828282', fontWeight: '700' }}>Forget Password? Click  </Text>
-              <Text style={{ color: '#D17842', fontWeight: '700' }}>Reset</Text>
+              <Text style={{ color: '#828282', fontWeight: '700' }}>Forget Password? Click  </Text><Text style={{ color: '#D17842', fontWeight: '700' }}>Reset</Text>
             </View>
           </View>
         </Block>

@@ -1,23 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import axios from 'axios';
+import COMMON from '../COMMON';
 
-export default function ChiTietSanPham() {
+export default function ChiTietSanPham({ route }) {
+  const { itemId } = route.params;
+  const [product, setProduct] = useState(null);
   const [soLuong, setSoLuong] = useState(1);
-  const [giaTien, setGiaTien] = useState(100); // Giá tiền mặc định là 100
-  const [yeuThich, setYeuThich] = useState(false);
+  const [giaTien, setGiaTien] = useState(); 
+  const [yeuThich, setYeuThich] = useState();
   const [binhLuan, setBinhLuan] = useState("");
+
+  useEffect(() => {
+    fetchProductData();
+  }, []);
+
+  const fetchProductData = async () => {
+    try {
+      const response = await axios.get(`http://${COMMON.ipv4}:3000/sanpham`);
+      const productData = response.data.find(item => item.id === itemId);
+      setProduct(productData);
+      setGiaTien(productData.price);
+      setYeuThich(productData.status);
+    } catch (error) {
+      console.log('Error fetching product data:', error);
+    }
+  };
+
+  if (!product) {
+    return <Text>Sản phẩm không tồn tại.</Text>;
+  }
 
   const tangSoLuong = () => {
     const newSoLuong = soLuong + 1;
     setSoLuong(newSoLuong);
-    setGiaTien(100 * newSoLuong); // Giả sử giá tiền cố định là 100 cho mỗi đơn vị
+    setGiaTien(giaTien * newSoLuong); // Giả sử giá tiền cố định là 100 cho mỗi đơn vị
   };
 
   const giamSoLuong = () => {
     if (soLuong > 1) {
       const newSoLuong = soLuong - 1;
       setSoLuong(newSoLuong);
-      setGiaTien(100 * newSoLuong);
+      setGiaTien(giaTien * newSoLuong);
     }
   };
 
@@ -31,13 +55,13 @@ export default function ChiTietSanPham() {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.imageContainer}>
           <Image
-            source={require('../img/dienthoai.jpg')} // Đường dẫn đến ảnh sản phẩm
+            source={{ uri: product.image }} // Đường dẫn đến ảnh sản phẩm
             style={styles.image}
             resizeMode="contain"
           />
           <TouchableOpacity
             style={styles.yeuThichButton}
-            onPress={() => setYeuThich(!yeuThich)}
+            onPress={() => setYeuThich(product.status === 1)}
           >
             <Image
               source={yeuThich ? require('../img/tym.png') : require('../img/tymdo.png')}
@@ -47,15 +71,11 @@ export default function ChiTietSanPham() {
         </View>
 
         <View style={styles.detailsContainer}>
-          <Text style={styles.title}>Tên điện thoại: Samsung Galaxy S21</Text>
-          <Text style={styles.details}>Hãng điện thoại: Samsung</Text>
-          <Text style={styles.details}>Giá tiền: 99999 đ</Text>
+          <Text style={styles.title}>Tên điện thoại: {product.name}</Text>
+          <Text style={styles.details}>Hãng điện thoại: {product.brand}</Text>
+          <Text style={styles.details}>Giá tiền: {product.price}</Text>
           <Text style={styles.details}>Chi tiết sản phẩm:</Text>
-          <Text style={styles.longDetails}>
-            Điện thoại Samsung Galaxy S21 là một sản phẩm công nghệ hàng đầu với nhiều tính năng vượt trội. 
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </Text>
+          <Text style={styles.longDetails}>{product.detail}</Text>
           <TextInput
             style={styles.binhLuanInput}
             value={binhLuan}
@@ -65,8 +85,6 @@ export default function ChiTietSanPham() {
         </View>
       </ScrollView>
 
-      
-
       <View style={styles.muahang}>
         <View style={styles.priceContainer}>
           <Text style={styles.priceLabel}>Giá tiền:</Text>
@@ -74,19 +92,19 @@ export default function ChiTietSanPham() {
         </View>
 
         <View style={styles.soLuongContainer}>
-        <TouchableOpacity onPress={giamSoLuong} style={styles.soLuongButton}>
-          <Text style={styles.soLuongButtonText}>-</Text>
-        </TouchableOpacity>
-        <TextInput
-          style={styles.soLuongInput}
-          value={soLuong.toString()}
-          keyboardType="numeric"
-          editable={false} // Người dùng không thể chỉnh sửa trực tiếp số lượng từ bàn phím
-        />
-        <TouchableOpacity onPress={tangSoLuong} style={styles.soLuongButton}>
-          <Text style={styles.soLuongButtonText}>+</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={giamSoLuong} style={styles.soLuongButton}>
+            <Text style={styles.soLuongButtonText}>-</Text>
+          </TouchableOpacity>
+          <TextInput
+            style={styles.soLuongInput}
+            value={soLuong.toString()}  
+            keyboardType="numeric"
+            editable={false} // Người dùng không thể chỉnh sửa trực tiếp số lượng từ bàn phím
+          />
+          <TouchableOpacity onPress={tangSoLuong} style={styles.soLuongButton}>
+            <Text style={styles.soLuongButtonText}>+</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity onPress={muaSanPham} style={styles.muaButton}>
           <Text style={styles.muaButtonText}>Mua Ngay</Text>
         </TouchableOpacity>

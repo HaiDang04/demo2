@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1095646429884",
+    "project_id": "asmapi-a873f",
+    "storage_bucket": "asmapi-a873f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095646429884:android:89e0e7a5e22e9def5f86b9",
+        "android_client_info": {
+          "package_name": "com.demo2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSgG2U-CN7VwPOy_rL-KJwBPOVinJqxqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095646429884:android:91609565abde75515f86b9",
+        "android_client_info": {
+          "package_name": "com.example.asm_rest_api"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSgG2U-CN7VwPOy_rL-KJwBPOVinJqxqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
